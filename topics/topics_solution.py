@@ -11,28 +11,18 @@ corpus_lemmalists = parse_vrt_in_dir(dirname)
 
 sys.stderr.write("Building gensim dictionary... "); sys.stderr.flush()
 start_time = time.time()
-
 # Exercise 4: parallelise computing the dictionary
-# Hint: you will nead to read the gensim API documentation
 dictionary = gensim.corpora.Dictionary(corpus_lemmalists)
 sys.stderr.write(f"Done in {time.time() - start_time:.2f} s\n")
 sys.stderr.write("Computing BOW corpus... "); sys.stderr.flush()
 start_time = time.time()
-
 # Exercise 3: Parallelise computing bow_corpus
-# Hint: send the corpus in suitable-sized chunks to processes that map
-# the corpus with the function dictionary.doc2bow
 bow_corpus = [dictionary.doc2bow(text) for text in corpus_lemmalists]
 sys.stderr.write(f"Done in {time.time() - start_time:.2f} s\n")
+# Exercise 2: replace LdaModel with a parallel version
 sys.stderr.write("Computing LDA model... "); sys.stderr.flush()
 start_time = time.time()
-
-# Exercise 2: replace LdaModel with a parallel version
-# Hint: you can simply replace the model name, but do look at the API,
-# choose a number of processes, and test which one works best. Warning:
-# memory consumption will grow with number of processes, it's possible to run
-# out if you have a lot of cores!
-lda = gensim.models.LdaModel(bow_corpus, num_topics = 10)
+lda = gensim.models.LdaMulticore(bow_corpus, num_topics = 10, workers = 2) # FIXME
 sys.stderr.write(f"Done in {time.time() - start_time:.2f} s\n")
 for topic in enumerate(lda.show_topics(num_topics = 10,
                                        num_words = 10,
