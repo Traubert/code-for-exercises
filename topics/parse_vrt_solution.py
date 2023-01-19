@@ -1,7 +1,7 @@
 import os
 import sys
 from lxml import etree
-
+from multiprocessing import Pool # process-based parallelism
 
 def vrt2lemmalists(filename, max_texts = None, lemma_col = 3):
     '''
@@ -23,8 +23,6 @@ def vrt2lemmalists(filename, max_texts = None, lemma_col = 3):
             continue
         # A text has ended
         text_count += 1
-        if text_count % 1000 == 0:
-            sys.stderr.write(f"\r{text_count} texts read")
         text = parser.close()
         this_text = []
         for leaf in text.iter():
@@ -34,17 +32,18 @@ def vrt2lemmalists(filename, max_texts = None, lemma_col = 3):
                     this_text.append(token.split('\t')[lemma_col-1])
                     token_count += 1
         retval.append(this_text)
-    sys.stderr.write(f"\r  {text_count} texts read\n")
-    sys.stderr.write(f"  {token_count} tokens total\n")
+    sys.stderr.write(f"Finished reading {filename}, {text_count} texts and {token_count} tokens\n")
     return retval
 
 def parse_vrt_in_dir(dirname):
+    # Solution (one possible one): we map each filename to a vrt2lemmalists call using multiprocessing.Pool
     retval = []
-    for filename in os.listdir(dirname):
-        if not filename.endswith('.vrt'):
-            continue
-        # Exercise: parallelise parsing the corpora
-        retval += vrt2lemmalists(os.path.join(dirname, filename))
+    # First we get the valid file names
+    filenames = [os.path.join(dirname, filename) for filename in os.listdir(dirname) if filename.endswith('.vrt')]
+    # Then we initialize a Pool object
+    pool = Pool() # by default, processes = number of cores
+    for result in pool.map(vrt2lemmalists, filenames):
+        retval += result
     return retval
 
 if __name__ == '__main__':
