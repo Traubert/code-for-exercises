@@ -43,6 +43,9 @@ def vrt2lemmalists(filename, max_texts = None, lemma_col = 3):
     return retval
 
 def parse_vrt_in_dir(dirname):
+    '''
+    Parse each file ending in .vrt in dirname in parallel, and return their concatenation.
+    '''
     start_time = time.time()
     sys.stderr.write(f"Running parse_vrt_in_dir...\n");
     # Solution (one possible one): we map each filename to a vrt2lemmalists call using multiprocessing.Pool
