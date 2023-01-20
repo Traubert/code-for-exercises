@@ -9,7 +9,7 @@ title: Exercise - Fetch text in VRT format and do topic modeling
 <!-- | ☝🏻    | Notice or a side-note | -->
 <!-- | ‼️ Important information    -->
 
-# Exercise - Fetch text data in VRT format and do topic modeling on it
+# Exercise - Fetch text in VRT format and do topic modeling
 
 💬 In this exercise we will experiment with a common task for text, topic modeling. You can go through the tutorial step by step and do all the exercises, run scripts that do the steps for you, or just read it. The exercises are in the form of Python code that you can edit to make it run faster. Solutions are included.
 
