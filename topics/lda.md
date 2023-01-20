@@ -46,7 +46,7 @@ For the rest of this session, your default Python environment will have the pack
 
 ## Data
 
-The Language Bank of Finland keeps its analyzed text data in a format called [https://www.kielipankki.fi/development/korp/corpus-input-format/](VRT). VRT is used because it's the format of the [IMG Open Corpus Workbench](http://cwb.sourceforge.net/) (CWB), so it's not exactly a common standard, but it's easy enough to use for many purposes. We will fetch some VRT files, extract the lemmas, and use the lemmas as input to a topic modeling package.
+The Language Bank of Finland keeps its analyzed text data in a format called [VRT](https://www.kielipankki.fi/development/korp/corpus-input-format/). VRT is used because it's the format of the [IMG Open Corpus Workbench](http://cwb.sourceforge.net/) (CWB), so it's not exactly a common standard, but it's easy enough to use for many purposes. We will fetch some VRT files, extract the lemmas, and use the lemmas as input to a topic modeling package.
 
 The Language Bank maintains a [directory of corpora](https://www.kielipankki.fi/corpora/) which you can browse for corpora available to you. Each corpus is listed with license information: PUB means available to everyone, ACA means available for users affiliated with an academic institution, RES means you have to apply for access.
 
