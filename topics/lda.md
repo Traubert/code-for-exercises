@@ -38,8 +38,8 @@ $ source tmp-venv/bin/activate                                                  
 $ module load tykky                                                                               # load the tykky module
 $ pip-containerize new --prefix /scratch/<project>/$USER/csc-exercises/topics requirements.txt    # or whatever directory you chose
 $ deactivate                                                                                      # exit the temporary venv
-rm -rf tmp-venv                                                                                   # not needed anymore
-export PATH="/scratch/<project>/$USER/csc-training/topics/tykky-env/bin:$PATH"                    # make the tykky environment visible
+$ rm -rf tmp-venv                                                                                   # not needed anymore
+$ export PATH="/scratch/<project>/$USER/csc-training/topics/tykky-env/bin:$PATH"                    # make the tykky environment visible
 ```
 
 For the rest of this session, your default Python environment will have the packages from `requirements.txt` installed. After logging out, things will be back to the way they were before. Then you can `export PATH` again, or set the path on every login in eg. `.bash_profile`.
