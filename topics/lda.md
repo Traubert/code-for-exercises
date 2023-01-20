@@ -48,7 +48,7 @@ For the rest of this session, your default Python environment will have the pack
 
 The Language Bank of Finland keeps its analyzed text data in a format called [https://www.kielipankki.fi/development/korp/corpus-input-format/](VRT). VRT is used because it's the format of the [IMG Open Corpus Workbench](http://cwb.sourceforge.net/) (CWB), so it's not exactly a common standard, but it's easy enough to use for many purposes. We will fetch some VRT files, extract the lemmas, and use the lemmas as input to a topic modeling package.
 
-The Language Bank maintains a [https://www.kielipankki.fi/corpora/](directory of corpora) which you can browse for corpora available to you. Each corpus is listed with license information: PUB means available to everyone, ACA means available for users affiliated with an academic institution, RES means you have to apply for access.
+The Language Bank maintains a [directory of corpora](https://www.kielipankki.fi/corpora/) which you can browse for corpora available to you. Each corpus is listed with license information: PUB means available to everyone, ACA means available for users affiliated with an academic institution, RES means you have to apply for access.
 
 You'll also need a directory in which to work, it's up to you, but making a directory for this under `/scratch/project/<your_username>` is a good choice, since we're just trying things out. You can make sure that this directory exists with `mkdir -p /scratch/<project>/$USER`. In that directory, fetch some starter code into a new directory with `git clone https://github.com/Traubert/code-for-exercises.git csc-exercises`. Then `cd csc-exercises/topics` into the directory for this exercise. This will be our workspace.
 
