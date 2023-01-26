@@ -59,8 +59,10 @@ def vrt2lemmalists(filename, max_texts = None, lemma_col = 3):
             tokens = leaf.text.strip()
             if tokens != "":
                 for token in tokens.split('\n'):
-                    this_text.append(token.split('\t')[lemma_col-1])
                     token_count += 1
+                    lemma = token.split('\t')[lemma_col-1]
+                    if is_content_word(lemma):
+                        this_text.append(lemma)
         retval.append(this_text)
     sys.stderr.write(f"Finished reading {filename}, {text_count} texts and {token_count} tokens\n")
     return retval

@@ -2,7 +2,7 @@ import gensim
 import os
 import sys
 import time
-from parse_vrt import parse_vrt_in_dir
+from parse_vrt_solution import parse_vrt_in_dir
 from multiprocessing import Pool
 
 processed_corpus = []
