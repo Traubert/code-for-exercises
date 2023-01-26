@@ -133,11 +133,15 @@ Running parse_vrt_in_dir...
 ☝🏻 Your first task, should you choose to accept it, is to replace the sequential processing of VRT files in `parse_vrt.py` with parallel processing, and then verify that you are able to accomplish this step faster with parallel than sequential processing.
 
 <details><summary>Hint 1</summary>
+
 There are several files to read and process, so you process different files separately and combine the results afterwards.
+
 </details>
 
 <details><summary>Hint 2</summary>
+
 The standard library module `multiprocessing` has helpful facilities for this, such as `multiprocessing.Pool`, which can be used to `map` inputs to outputs in parallel.
+
 </details>
 
 <details><summary>One possible solution for this is included in `parse_vrt_solution.py`, or you can expand this line to see some code.</summary>
