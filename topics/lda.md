@@ -255,6 +255,7 @@ This doesn't really save any processing time, due to communication overhead bein
 ☝🏻 Parallelise computing the `gensim` dictionary.    This exercise is the trickiest one, and least useful to implement.
 
 <details><summary>Hint 1</summary>
+
 The `Dictionary` object has a method .merge_with(other), which we can use to turn a collection of dictionaries into one. But to do this we also need to split the source data, which is a list, into sublists.
 </details>
 
