@@ -31,15 +31,15 @@ There are essentially three alternatives for installing Python dependencies:
 
 If you have a `requirements.txt` file, as we do here, installing them into a `tykky` environment is in principle simple, as long as your libraries support the default Python version, which at the time of writing is 3.6. Unfortunately, that's too old for us, so we'll first make a temporary `venv` in which to build the `tykky` container with python3.9. So we do:
 
-```
+```bash
 $ mkdir tykky-env                                                                                 # the tykky environment will go here
 $ python3.9 -m venv tmp-venv                                                                      # create a temporary venv with the correct Python version
 $ source tmp-venv/bin/activate                                                                    # step into the venv
 $ module load tykky                                                                               # load the tykky module
 $ pip-containerize new --prefix /scratch/<project>/$USER/csc-exercises/topics requirements.txt    # or whatever directory you chose
 $ deactivate                                                                                      # exit the temporary venv
-$ rm -rf tmp-venv                                                                                   # not needed anymore
-$ export PATH="/scratch/<project>/$USER/csc-training/topics/tykky-env/bin:$PATH"                    # make the tykky environment visible
+$ rm -rf tmp-venv                                                                                 # not needed anymore
+$ export PATH="/scratch/<project>/$USER/csc-training/topics/tykky-env/bin:$PATH"                  # make the tykky environment visible
 ```
 
 For the rest of this session, your default Python environment will have the packages from `requirements.txt` installed. After logging out, things will be back to the way they were before. Then you can `export PATH` again, or set the path on every login in eg. `.bash_profile`.
@@ -56,7 +56,7 @@ You'll also need a directory in which to work, it's up to you, but making a dire
 
 The rest of this example will use the YLE news in Finnish corpus, which can be downloaded [here](https://korp.csc.fi/download/YLE/fi/2011-2018-s-vrt/).
 
-```
+```bash
 $ wget https://korp.csc.fi/download/YLE/fi/2019-2021-s-vrt/ylenews-fi-2019-2021-s-vrt.zip
 
 $ unzip ylenews-fi-2019-2021-s-vrt.zip -d $TMPDIR
@@ -70,7 +70,7 @@ We should now have three VRT files under `ylenews-fi-2019-2021-s-vrt/vrt` of rou
 
 💭 Let's take a quick look at the files so we have some idea of what we're dealing with:
 
-```
+```bash
 $ head $TMPDIR/ylenews-fi-2019-2021-s-vrt/vrt/ylenews_fi_2019_s.vrt 
 <!-- #vrt positional-attributes: word ref lemma lemmacomp pos msd dephead deprel lex/ -->
 <!-- #vrt info: VRT generated from CWB data for corpus "ylenews_fi_2019_s" (2022-08-24 11:38:39 +0300) -->
@@ -88,7 +88,7 @@ VRT is a pseudo-xml format. By pseudo I mean that it doesn't have a root node, b
 
 💭 You may notice that the `text` element has some interesting attributes, like `departments`, `main_department` and `publisher`. Unfortunately the `main_department` is usually empty (the commands are `unix` tools available on every system):
 
-```
+```bash
 $ grep --only-matching 'main_department="[^"]*' $TMPDIR/ylenews-fi-2019-2021-s-vrt/vrt/ylenews_fi_2019_s.vrt | sed 's/main_department="//' | sort | uniq -c | sort -nr
   62104 
     319 Yle TV1
@@ -102,7 +102,7 @@ $ grep --only-matching 'main_department="[^"]*' $TMPDIR/ylenews-fi-2019-2021-s-v
 
 The `publisher` never is:
 
-```
+```bash
 $ grep --only-matching 'publisher="[^"]*' $TMPDIR/ylenews-fi-2019-2021-s-vrt/vrt/ylenews_fi_2019_s.vrt | sed 's/publisher="//' | sort | uniq -c | sort -nr
   38110 Yle Uutiset
   14104 Yle Urheilu
@@ -117,7 +117,7 @@ The attributes come from the data source, and there's no general rule as to what
 
 💬 Moving on, we can try to run `parse_vrt.py`, which by default builds lists of lemmas of each text, and then does nothing with them. It's under the `topics/` directory we `git clone`d earlier. It should look something like this:
 
-```
+```bash
 $ python3 parse_vrt.py $TMPDIR/ylenews-fi-2019-2021-s-vrt/vrt
 Running parse_vrt_in_dir...
   Reading ylenews-fi-2019-2021-s-vrt/vrt/ylenews_fi_2019_s.vrt
@@ -137,7 +137,7 @@ Running parse_vrt_in_dir...
 
 💬 Next we will use `gensim` to do some topic modeling. The Python script `topics.py` uses `parse_vrt.py` to get data, and processes it in various ways. Try running it with the same argument:
 
-```
+```bash
 $ python3 topics.py $TMPDIR/ylenews-fi-2019-2021-s-vrt/vrt
 Running parse_vrt_in_dir...
   Reading ylenews-fi-2019-2021-s-vrt/vrt/ylenews_fi_2019_s.vrt
@@ -156,7 +156,7 @@ Done in 1.53 s
 [topic printout]
 ```
 
-After the one step from the previous section, we have added three more sections. All of them can be parallelised, but not all of them offer the same potential. If you are interested in parallelising code, they are all interesting examples, but the most important practical skill is to recognise at this point that these steps represent 47%, 7%, 5% and 41% of the runtime respectively, so that is the ceiling to how much can be accomplished by speeding them up.
+After the one step from the previous section, we have added three more sections. All of them can be parallelised, but not all of them offer the same potential. If you are interested in parallelising code, they are all interesting examples, but the most important practical skill is to recognise at this point that these steps represent 47%, 7%, 5% and 41% of the runtime respectively, so that is the ceiling to how much can be accomplished by speeding them up. It is also often the case that relatively fast tasks also have relatively little to gain from parallelisation.
 
 FIXME Running the training process in a loop to find optimal number of topics?
 

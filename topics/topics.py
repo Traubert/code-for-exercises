@@ -1,3 +1,5 @@
+# Comments beginning with "Exercise" mark places to edit the code
+
 import gensim
 import os
 import sys
@@ -14,8 +16,8 @@ corpus_lemmalists = parse_vrt_in_dir(dirname)
 sys.stderr.write("Building gensim dictionary... "); sys.stderr.flush()
 start_time = time.time()
 
-# Exercise 4: parallelise computing the dictionary
-# Hint: you will nead to read the gensim API documentation
+# This CAN be parallelised via making several dictionaries
+# and merging them, but not really worth it (you can try!)
 dictionary = gensim.corpora.Dictionary(corpus_lemmalists)
 sys.stderr.write(f"Done in {time.time() - start_time:.2f} s\n")
 sys.stderr.write("Computing BOW corpus... "); sys.stderr.flush()
