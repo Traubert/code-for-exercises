@@ -268,15 +268,6 @@ def split_list(l, n):
 ```
 </details>
 
-<details><summary>Hint 2</summary>
-
-You can make sublists with a generator comprehension like this:
-```python
-def split_list(l, n):
-    return (l[i:i+n] for i in range(0, len(l), n))
-```
-</details>
-
 <details><summary>Solution</summary>
 
 ```python
