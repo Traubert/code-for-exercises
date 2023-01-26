@@ -25,9 +25,9 @@ def parse_vrt_in_dir(dirname):
     # First we get the valid file names
     filenames = [os.path.join(dirname, filename) for filename in os.listdir(dirname) if filename.endswith('.vrt')]
     # Then we initialize a Pool object
-    pool = Pool() # by default, processes = number of cores
-    for result in pool.map(vrt2lemmalists, filenames):
-        retval += result
+    with Pool() as pool: # by default, processes = number of cores
+        for result in pool.map(vrt2lemmalists, filenames):
+            retval += result
     # How long did we take?
     sys.stderr.write(
         f"...finished in {time.time() - start_time:.2f} s\n")

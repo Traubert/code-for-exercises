@@ -11,13 +11,17 @@ n_topics = 10
 processed_corpus = []
 dirname = sys.argv[1]
 
+start_time = time.time()
+sys.stderr.write(f"Running parse_vrt_in_dir...\n");
 corpus_lemmalists = parse_vrt_in_dir(dirname)
+sys.stderr.write(
+    f"...finished in {time.time() - start_time:.2f} s\n")
 
 sys.stderr.write("Building gensim dictionary... "); sys.stderr.flush()
 start_time = time.time()
 
-# This CAN be parallelised via making several dictionaries
-# and merging them, but not really worth it (you can try!)
+# Exercise 4: Parallelise building the dictionary
+# Hint: the dictionary has a merge_with(other) method
 dictionary = gensim.corpora.Dictionary(corpus_lemmalists)
 sys.stderr.write(f"Done in {time.time() - start_time:.2f} s\n")
 sys.stderr.write("Computing BOW corpus... "); sys.stderr.flush()

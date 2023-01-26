@@ -26,14 +26,13 @@ def split_list(l, n):
     return (l[i:i+n] for i in range(0, len(l), n))
 
 dictionary = None
-pool = Pool(processes = n_workers)
-for sub_dictionary in pool.map(gensim.corpora.Dictionary,
-                               split_list(corpus_lemmalists, 5000)):
-    if dictionary is None:
-        dictionary = sub_dictionary
-    else:
-        dictionary.merge_with(sub_dictionary)
-pool.close()
+with Pool(processes = n_workers) as pool:
+    for sub_dictionary in pool.map(gensim.corpora.Dictionary,
+                                   split_list(corpus_lemmalists, 5000)):
+        if dictionary is None:
+            dictionary = sub_dictionary
+        else:
+            dictionary.merge_with(sub_dictionary)
 
 dictionary = gensim.corpora.Dictionary(corpus_lemmalists)
 sys.stderr.write(f"Done in {time.time() - start_time:.2f} s\n")
@@ -41,10 +40,8 @@ sys.stderr.write("Computing BOW corpus... "); sys.stderr.flush()
 start_time = time.time()
 
 # Solution to exercise 3: Parallelise computing bow_corpus
-pool = Pool(processes = n_workers)
-bow_corpus = list(pool.map(dictionary.doc2bow,
-                           corpus_lemmalists))
-pool.close()
+with Pool(processes = n_workers) as pool:
+    bow_corpus = pool.map(dictionary.doc2bow, corpus_lemmalists)
 sys.stderr.write(f"Done in {time.time() - start_time:.2f} s\n")
 
 # Exercise 2: replace LdaModel with a parallel version
