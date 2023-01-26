@@ -145,6 +145,7 @@ The standard library module `multiprocessing` has helpful facilities for this, s
 </details>
 
 <details><summary>
+
 One possible solution for this is included in `parse_vrt_solution.py`, or you can expand this line to see some code.
 </summary>
 
