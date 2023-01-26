@@ -205,12 +205,17 @@ After the one step from the previous section, we have added three more sections.
 ☝🏻 Replace the LdaModel class with something else to accomplish the same result, but quicker.
 
 <details><summary>Hint 1</summary>
-Go to the `gensim` [API reference](https://radimrehurek.com/gensim/apiref.html) and search the page for "models.lda".</details>
+
+Go to the `gensim` [API reference](https://radimrehurek.com/gensim/apiref.html) and search the page for "models.lda".
+</details>
 
 <details><summary>Hint 2</summary>
-Try the `gensim.models.LdaMulticore` class.</details>
+
+Try the `gensim.models.LdaMulticore` class.
+</details>
 
 <details><summary>Solution</summary>
+
 Change this:
 ```python
 lda = gensim.models.LdaModel(bow_corpus, num_topics = n_topics)
@@ -226,9 +231,12 @@ lda = gensim.models.LdaMulticore(bow_corpus, num_topics = n_topics, workers = n_
 ☝🏻 Parallelise computing the BOW corpus. This means replacing the texts (or in this case, lists of lemmas) with bag-of-words representations. Each text will undergo the same transformation, so this should be possible to parallelise.
 
 <details><summary>Hint 1</summary>
-You can use `multiprocessing.Pool.map` like in the first exercise, but in an even simpler way: the result is simply the map.</details>
+
+You can use `multiprocessing.Pool.map` like in the first exercise, but in an even simpler way: the result is simply the map.
+</details>
 
 <details><summary>Solution</summary>
+
 Change this:
 ```python
 bow_corpus = [dictionary.doc2bow(text) for text in corpus_lemmalists]
@@ -251,6 +259,7 @@ The `Dictionary` object has a method .merge_with(other), which we can use to tur
 </details>
 
 <details><summary>Hint 2</summary>
+
 You can make sublists with a generator comprehension like this:
 ```python
 def split_list(l, n):
@@ -259,6 +268,7 @@ def split_list(l, n):
 </details>
 
 <details><summary>Hint 2</summary>
+
 You can make sublists with a generator comprehension like this:
 ```python
 def split_list(l, n):
@@ -267,6 +277,7 @@ def split_list(l, n):
 </details>
 
 <details><summary>Solution</summary>
+
 ```python
 def split_list(l, n):
     return (l[i:i+n] for i in range(0, len(l), n))
