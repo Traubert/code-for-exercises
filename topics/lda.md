@@ -86,6 +86,7 @@ huomasin	5	huomata	huomata	V	PRS_Sg1|VOICE_Act|TENSE_Prt|MOOD_Ind	0	ROOT	|huomat
 
 VRT is a pseudo-xml format. By pseudo I mean that it doesn't have a root node, but is instead a sequence of `text` elements. (There are some other differences but that's not important right now.) The leaf nodes which contain text (here, `sentence`), have one token per line, with fields separated by tabs. So it's a TSV (tab-separated values) format inside an XML-like format. The first line indicates what the fields mean; the first one is `word`, for word form, the second is `ref`, for token number, `lemma` for lemma and so on.
 
+<details><summary>
 💭 You may notice that the `text` element has some interesting attributes, like `departments`, `main_department` and `publisher`. Unfortunately the `main_department` is usually empty (the commands are `unix` tools available on every system):
 
 ```bash
@@ -110,7 +111,7 @@ $ grep --only-matching 'publisher="[^"]*' $TMPDIR/ylenews-fi-2019-2021-s-vrt/vrt
    1301 yle-aihe
 ...
 ```
-
+</details>
 The attributes come from the data source, and there's no general rule as to what you can rely on. Clearly here `publisher` is somewhat meaningful and very reliable, `main_department` has more detail, but is very sparse (perhaps we could fill it in ourselves!).
 
 ## Data processing
