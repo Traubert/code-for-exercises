@@ -134,7 +134,7 @@ Running parse_vrt_in_dir...
 
 <details><summary>Hint 1</summary>
 
-There are several files to read and process, so you process different files separately and combine the results afterwards.
+There are several files to read and process, so you can process different files separately and combine the results afterwards.
 
 </details>
 
