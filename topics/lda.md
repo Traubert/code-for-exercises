@@ -164,7 +164,7 @@ Solution:
 ```python
     # Exercise 1 solution (one possible one): we map each filename to a
     # vrt2lemmalists call using multiprocessing.Pool
-	from multiprocessing import Pool
+    from multiprocessing import Pool
     retval = []
     # First we get the valid file names
     filenames = [os.path.join(dirname, filename) for filename in os.listdir(dirname) if filename.endswith('.vrt')]
