@@ -15,11 +15,11 @@ title: Exercise - Fetch text in VRT format and do topic modeling
 
 ## A processing node and workspaces
 
-☝🏻 First, hop into an interacive computing node with `sinteractive --time 08:00:00 --mem 32000 --cores 4`, it will prompt you to select a CSC project. `--time 08:00:00` means that the node will kick you out after 8 hours. If you exit the node before then, you will save on billing units; the reservation is more for scheduling than billing purposes. `--mem 32000` means 32000 megabytes, and `--cores 4` means you will be able to run that many processes simultaneously (for this small example). Note that in the computing node your environment may be different than in the login node, so will need to `module load git` if you don't already have that happen automatically.
+☝🏻 First, hop into an interacive computing node with `sinteractive --time 08:00:00 --mem 32000 --cores 4`, it will prompt you to select a CSC project. `--time 08:00:00` means that the node will kick you out after 8 hours. If you exit the node before then, you will save on billing units; the reservation is more for scheduling than billing purposes. `--mem 32000` means 32000 megabytes, and `--cores 4` means you will be able to run that many processes simultaneously (for this small example).
 
 We will organise workspaces as follows: data archives, which we don't want to download many times, go to a non-temporary location, like `/scratch/<project>/<your_username>/`. The same with dependencies and code. But we'll unpack data into `$TMPDIR`. The reason for this is that `$TMPDIR` will be a disk local to the computing node, so it will be fast for reading and writing. In this particular case with just a few files it barely matters, but it's a good habit to learn.
 
-For dependencies and code, making a directory for this under `/scratch/<project>/<your_username>` is a good choice, since we're just trying things out. You can make sure that this directory exists with `mkdir -p /scratch/<project>/$USER`. In that directory, fetch some starter code into a new directory with `git clone https://github.com/Traubert/code-for-exercises.git csc-exercises`. Then `cd csc-exercises/topics` into the directory for this exercise. This will be our workspace. The Python scripts ending with `_solution.py` contain solutions to the exercises.
+For dependencies and code, making a directory for this under `/scratch/<project>/<your_username>` is a good choice, since we're just trying things out. You can make sure that this directory exists with `mkdir -p /scratch/<project>/$USER`. In that directory, fetch some starter code into a new directory with `wget https://a3s.fi/hardwick-clarin-pub/lda.zip; unzip lda.zip` (assuming you don't already have a directory called `lda`. Then `cd lda` into the directory. This will be our workspace. The Python scripts ending with `_solution.py` contain solutions to the exercises.
 
 ## Dependencies
 
@@ -38,10 +38,10 @@ $ mkdir tykky-env                                                               
 $ python3.9 -m venv tmp-venv                                                                      # create a temporary venv with the correct Python version
 $ source tmp-venv/bin/activate                                                                    # step into the venv
 $ module load tykky                                                                               # load the tykky module
-$ pip-containerize new --prefix /scratch/<project>/$USER/csc-exercises/topics requirements.txt    # or whatever directory you chose
+$ pip-containerize new --prefix /scratch/<project>/$USER/lda requirements.txt                     # or whatever directory you chose
 $ deactivate                                                                                      # exit the temporary venv
 $ rm -rf tmp-venv                                                                                 # not needed anymore
-$ export PATH="/scratch/<project>/$USER/csc-training/topics/tykky-env/bin:$PATH"                  # make the tykky environment visible
+$ export PATH="/scratch/<project>/$USER/csc-training/lda/tykky-env/bin:$PATH"                     # make the tykky environment visible
 ```
 
 For the rest of this session, your default Python environment will have the packages from `requirements.txt` installed. After logging out, things will be back to the way they were before. Then you can `export PATH` again, or set the path on every login in eg. `.bash_profile`.
@@ -114,7 +114,7 @@ The attributes come from the data source, and there's no general rule as to what
 
 ## Data processing
 
-💬 Moving on, we can try to run `parse_vrt.py`, which by default builds lists of lemmas of each text, and then does nothing with them. It's under the `topics/` directory we `git clone`d earlier. It should look something like this:
+💬 Moving on, we can try to run `parse_vrt.py`, which by default builds lists of lemmas of each text, and then does nothing with them. It should look something like this:
 
 ```bash
 $ python3 parse_vrt.py $TMPDIR/ylenews-fi-2019-2021-s-vrt/vrt
